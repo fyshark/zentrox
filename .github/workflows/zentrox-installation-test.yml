@@ -1,0 +1,33 @@
+name: Zentrox Installation Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-installation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run installation script
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/Wervice/zentrox/main/install.bash -o zentrox_installer.bash
+          bash zentrox_installer.bash # Consider using options for automation
+
+      - name: Verify installation
+        run: |
+          # Add commands to check for files/directories
+          if [ ! -f "path/to/important/file" ]; then
+            exit 1
+          fi
+
+      - name: Verify application execution
+        run: |
+          # Add commands to check if the application is running
+          if ! pgrep "zentrox" > /dev/null; then
+            exit 1
+          fi
